@@ -1,6 +1,6 @@
 package com.prime.rushhour.configuration;
 
-import com.prime.rushhour.controller.UserController;
+import com.prime.rushhour.RushHourApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -16,21 +16,21 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 import java.util.Collections;
 import java.util.List;
 
-@EnableSwagger2WebMvc
 @Configuration
+@EnableSwagger2WebMvc
 public class SwaggerConfiguration {
 
   private static final String NAME = "Bearer";
   private static final String KEY_NAME = "Authorization";
   private static final String PASS = "header";
-  private static final String PATH_REGEX = "/api.*";
+  private static final String PATH_REGEX = "/.*";
   private static final String REFERENCE = "Bearer";
 
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2)
         .select()
-        .apis(RequestHandlerSelectors.basePackage(UserController.class.getPackageName()))
+        .apis(RequestHandlerSelectors.basePackage(RushHourApplication.class.getPackage().getName()))
         .paths(PathSelectors.any())
         .build()
         .securitySchemes(Collections.singletonList(new ApiKey(NAME, KEY_NAME, PASS)))
